@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Смешные мопсы</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #fdfdfd;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      text-align: center;
+    }
+    .header {
+      width: 100%;
+      background-color: #ffcc00;
+      padding: 10px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      width: 100%;
+      max-width: 1000px;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+      background: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .card img {
+      width: 100%;
+      height: auto;
+    }
+    .like-btn {
+      background: #ffcc00;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .like-count {
+      margin-top: 5px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">Создатель сайта: БОСС pipiskin2015 тру</div>
+  <h1>Смешные мопсы</h1>
+  <div class="gallery" id="gallery"></div>
+
+  <script>
+    const images = [
+      'https://i.pinimg.com/736x/8a/fa/00/8afa00d4cf0983cc40c093522d5817db.jpg',
+      'https://i.pinimg.com/550x/de/71/bb/de71bb8a57ff473cc58ebc6af58c4858.jpg',
+      'https://i.pinimg.com/originals/1b/73/85/1b738599eb748cc74aae2a9c250ff015.jpg',
+      'https://i.pinimg.com/originals/3b/b1/39/3bb139ce073a37974eba2d2a99301670.jpg'
+    ];
+
+    const gallery = document.getElementById('gallery');
+
+    images.forEach((src, index) => {
+      const likeKey = `like_${index}`;
+      const likeCount = localStorage.getItem(likeKey) || 0;
+
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = 'Мопс';
+
+      const likeBtn = document.createElement('button');
+      likeBtn.className = 'like-btn';
+      likeBtn.textContent = '❤️ Лайк';
+
+      const count = document.createElement('div');
+      count.className = 'like-count';
+      count.textContent = `Лайков: ${likeCount}`;
+
+      likeBtn.addEventListener('click', () => {
+        const newCount = parseInt(localStorage.getItem(likeKey) || 0) + 1;
+        localStorage.setItem(likeKey, newCount);
+        count.textContent = `Лайков: ${newCount}`;
+      });
+
+      card.appendChild(img);
+      card.appendChild(likeBtn);
+      card.appendChild(count);
+      gallery.appendChild(card);
+    });
+  </script>
+</body>
+</html>
